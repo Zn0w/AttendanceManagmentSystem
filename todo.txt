@@ -1,0 +1,10 @@
+Server:
+	set up basic client acceptance thread
+	create client handler class and handle info about connected client
+	manage client authentication
+	create file-based database
+
+Client:
+	create basic login window
+	make connection to the server
+	make main window appear after logging in
