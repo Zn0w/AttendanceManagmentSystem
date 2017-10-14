@@ -1,10 +1,10 @@
 package com.znow.communication_system.server;
 
-import java.net.Socket;
-import java.net.ServerSocket;
-import java.io.IOException;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Server {
 	
@@ -21,6 +21,22 @@ public class Server {
 			System.out.println("Failed to create a server");
 			e.printStackTrace();
 		}
+	}
+	
+	private class ClientHandler implements Runnable {
+
+		private BufferedReader reader;
+		private PrintWriter writer;
+		
+		private String name;
+		private String login;
+		private String password;
+		
+		@Override
+		public void run() {
+			
+		}
+		
 	}
 	
 }
