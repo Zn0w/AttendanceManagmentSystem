@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 
-class Server {
+public class Server {
 	
-	Server(int port) {
+	public Server(int port) {
 		try {
 			ServerSocket serverSocket = new ServerSocket(port);
 			System.out.println("Server has been started");

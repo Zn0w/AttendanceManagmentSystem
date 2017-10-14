@@ -1,5 +1,5 @@
 Server:
-	set up basic client acceptance thread
+	---set up basic client acceptance thread
 	create client handler class and handle info about connected client
 	manage client authentication
 	create file-based database
