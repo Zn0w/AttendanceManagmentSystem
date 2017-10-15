@@ -77,11 +77,14 @@ public class ClientWindow extends JFrame {
 	}
 	
 	public void drawMainWindow() {
-		System.out.println("draw main window");
+		JPanel root = new JPanel();
+		
+		setContentPane(root);
+		pack();
 	}
 	
 	public void notify(String message) {
-		
+		JOptionPane.showMessageDialog(this, message);
 	}
 	
 }
