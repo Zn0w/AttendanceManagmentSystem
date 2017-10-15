@@ -36,14 +36,31 @@ public class Client implements Runnable {
 		return false;
 	}
 	
-	public boolean logIn(String login, String password) {
-		return true;
+	public void logIn(String login, String password) {
+		writer.println("LOGIN;" + login + ";" + password);
+		writer.flush();
 	}
 
 	@Override
 	public void run() {
 		while (connected) {
-			
+			String message;
+			try {
+				if ((message = reader.readLine()) != null) {
+					System.out.println("Server: " + message);
+					
+					String[] messageAttributes = message.split(";");
+					
+					if (messageAttributes[0].equals("DISCONNECT")) {
+						reader.close();
+						writer.close();
+						
+						connected = false;
+					}
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

@@ -21,7 +21,8 @@ public class LoginWindowController {
 				window.notify("Couldn't log in");
 		}
 		else {
-			window.notify("Couldn't connect to server.");
+			window.notify("Couldn't connect to server. \n"
+					+ "Check if server is running or your login and password is correct");
 		}
 	}
 	
