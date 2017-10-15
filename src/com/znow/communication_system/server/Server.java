@@ -26,6 +26,12 @@ public class Server {
 			
 			while (running) {
 				Socket clientSocket = serverSocket.accept();
+				
+				ClientHandler clientHandler = new ClientHandler(clientSocket);
+				
+				Thread clientHandlerThread = new Thread(clientHandler);
+				clientHandlerThread.start();
+				
 				System.out.println("Client has connected");
 			}
 		} catch (IOException e) {
@@ -58,13 +64,14 @@ public class Server {
 		if (messageAttributes[0].equals("LOGIN")) {
 			try {
 				clientHandler.user = new UserDao().getUser(messageAttributes[1], messageAttributes[2]);
+				
+				clientHandler.writer.println("VERIFIED;");
+				clientHandler.writer.flush();
 			} catch (UserNotFoundException e) {
 				e.printStackTrace();
 				
-				clientHandler.writer.println("DISCONNECT;");
+				clientHandler.writer.println("NOT VERIFIED;");
 				clientHandler.writer.flush();
-				
-				disconnectClient(clientHandler);
 			}
 		}
 	}
@@ -95,16 +102,16 @@ public class Server {
 		
 		@Override
 		public void run() {
-			while (connected && running) {
-				String message;
-				try {
+			try {
+				while (connected && running) {
+					String message;
 					if ((message = reader.readLine()) != null) {
 						System.out.println("Client: " + message);
 						analyseMessage(message, this);
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
 				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 		

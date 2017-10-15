@@ -16,7 +16,7 @@ public class ClientMain {
 		client = new Client();
 		window = new ClientWindow(client);
 		
-		window.drawLoginWindow();
+		window.drawConnectWindow();
 	}
 
 }
