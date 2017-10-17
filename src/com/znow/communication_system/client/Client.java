@@ -46,6 +46,10 @@ public class Client implements Runnable {
 		
 		this.window = window;
 	}
+	
+	public List<Message> getMessages() {
+		
+	}
 
 	@Override
 	public void run() {

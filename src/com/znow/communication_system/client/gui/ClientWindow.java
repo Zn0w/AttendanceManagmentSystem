@@ -109,6 +109,8 @@ public class ClientWindow extends JFrame {
 	public void drawMainWindow() {
 		JPanel root = new JPanel();
 		
+		
+		
 		setContentPane(root);
 		pack();
 	}
