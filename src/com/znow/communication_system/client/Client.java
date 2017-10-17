@@ -6,12 +6,16 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.List;
 
 import com.znow.communication_system.client.gui.ClientWindow;
+import com.znow.communication_system.server.dao.MessageDao;
+import com.znow.communication_system.server.domain.Message;
 
 public class Client implements Runnable {
 	
 	private boolean connected = false;
+	private String login = "";
 	
 	private BufferedReader reader;
 	private PrintWriter writer;
@@ -46,10 +50,6 @@ public class Client implements Runnable {
 		
 		this.window = window;
 	}
-	
-	public List<Message> getMessages() {
-		
-	}
 
 	@Override
 	public void run() {
@@ -62,6 +62,8 @@ public class Client implements Runnable {
 					String[] messageAttributes = message.split(";");
 					
 					if (messageAttributes[0].equals("VERIFIED")) {
+						login = messageAttributes[1];
+						
 						window.drawMainWindow();
 					}
 					else if (messageAttributes[0].equals("NOT VERIFIED")) {

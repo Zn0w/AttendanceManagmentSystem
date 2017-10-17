@@ -109,7 +109,7 @@ public class ClientWindow extends JFrame {
 	public void drawMainWindow() {
 		JPanel root = new JPanel();
 		
-		
+		JButton showIncomingButton = new JButton();
 		
 		setContentPane(root);
 		pack();
