@@ -2,6 +2,7 @@ package com.znow.communication_system.client.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,6 +16,8 @@ import javax.swing.JTextField;
 import com.znow.communication_system.client.Client;
 import com.znow.communication_system.client.controllers.ConnectWindowController;
 import com.znow.communication_system.client.controllers.LoginWindowController;
+import com.znow.communication_system.server.dao.MessageDao;
+import com.znow.communication_system.server.domain.Message;
 
 @SuppressWarnings("serial")
 public class ClientWindow extends JFrame {
@@ -108,11 +111,64 @@ public class ClientWindow extends JFrame {
 	
 	public void drawMainWindow() {
 		JPanel root = new JPanel();
+		root.setLayout(new BoxLayout(root, BoxLayout.Y_AXIS));
 		
-		JButton showIncomingButton = new JButton();
+		JPanel messagesPane = new JPanel();
+		messagesPane.setLayout(new BoxLayout(root, BoxLayout.Y_AXIS));
+		root.add(messagesPane);
+		
+		JPanel buttonPane = new JPanel();
+		
+		JButton showIncomingButton = new JButton("Show incoming messages");
+		showIncomingButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				List<Message> messages = new MessageDao().getIncomingMessages(client.getLogin());
+				
+				for (Message message : messages) {
+					JButton messageButton = new JButton(message.getDate() + " " 
+							+ message.getSubject() + "From " + message.getFrom());
+					messageButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							drawMessageWindow(message);
+						}
+					});
+					messagesPane.add(messageButton);
+				}
+			}
+		});
+		buttonPane.add(showIncomingButton);
+		
+		JButton showOutgoingButton = new JButton("Show outgoing messages");
+		showOutgoingButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				List<Message> messages = new MessageDao().getOutgoingMessages(client.getLogin());
+				
+				for (Message message : messages) {
+					JButton messageButton = new JButton(message.getDate() + " " 
+							+ message.getSubject() + "To " + message.getTo());
+					messageButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							drawMessageWindow(message);
+						}
+					});
+					messagesPane.add(messageButton);
+				}
+			}
+		});
+		buttonPane.add(showOutgoingButton);
+		
+		root.add(buttonPane);
 		
 		setContentPane(root);
 		pack();
+	}
+	
+	public void drawMessageWindow(Message message) {
+		
 	}
 	
 	public void notify(String message) {

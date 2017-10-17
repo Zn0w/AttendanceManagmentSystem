@@ -76,4 +76,8 @@ public class Client implements Runnable {
 		}
 	}
 	
+	public String getLogin() {
+		return login;
+	}
+	
 }
