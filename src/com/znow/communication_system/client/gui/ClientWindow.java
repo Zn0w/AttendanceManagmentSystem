@@ -114,8 +114,7 @@ public class ClientWindow extends JFrame {
 		root.setLayout(new BoxLayout(root, BoxLayout.Y_AXIS));
 		
 		JPanel messagesPane = new JPanel();
-		messagesPane.setLayout(new BoxLayout(root, BoxLayout.Y_AXIS));
-		root.add(messagesPane);
+		messagesPane.setLayout(new BoxLayout(messagesPane, BoxLayout.Y_AXIS));
 		
 		JPanel buttonPane = new JPanel();
 		
@@ -123,6 +122,8 @@ public class ClientWindow extends JFrame {
 		showIncomingButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				messagesPane.removeAll();
+				
 				List<Message> messages = new MessageDao().getIncomingMessages(client.getLogin());
 				
 				for (Message message : messages) {
@@ -136,6 +137,9 @@ public class ClientWindow extends JFrame {
 					});
 					messagesPane.add(messageButton);
 				}
+				
+				messagesPane.revalidate();
+				pack();
 			}
 		});
 		buttonPane.add(showIncomingButton);
@@ -144,6 +148,8 @@ public class ClientWindow extends JFrame {
 		showOutgoingButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				messagesPane.removeAll();
+				
 				List<Message> messages = new MessageDao().getOutgoingMessages(client.getLogin());
 				
 				for (Message message : messages) {
@@ -157,9 +163,14 @@ public class ClientWindow extends JFrame {
 					});
 					messagesPane.add(messageButton);
 				}
+				
+				messagesPane.revalidate();
+				pack();
 			}
 		});
 		buttonPane.add(showOutgoingButton);
+		
+		root.add(messagesPane);
 		
 		root.add(buttonPane);
 		

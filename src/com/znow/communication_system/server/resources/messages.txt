@@ -1,0 +1,3 @@
+fromLogin;toLogin;date;from;to;subject;content
+jack;daniel;13.10.2017;Rober Heatbouss;Daniil Blagiy;Deal results;The deal was successful
+daniel;test;test date;Daniil Blagiy;Test to;test subject;test content
