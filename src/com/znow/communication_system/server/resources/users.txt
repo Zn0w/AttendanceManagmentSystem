@@ -1,1 +1,3 @@
 daniel;12345;Daniil Blagiy
+erick;8888;Erick Bulgaswow
+don;abc123;Donald Guss
