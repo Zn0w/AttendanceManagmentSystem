@@ -39,7 +39,13 @@ public class ClientWindow extends JFrame {
 	}
 	
 	public void drawMessageWindow(Message message) {
-		
+		String messageContents = 	"Date: " + message.getDate() + "\n" +
+				"From: " + message.getFrom() + "\n" +
+				"To: "   + message.getTo()   + "\n" +
+				"Subject: " + message.getSubject() + "\n" + "\n" +
+				message.getContent();
+
+		notify(messageContents);
 	}
 	
 	public void notify(String message) {

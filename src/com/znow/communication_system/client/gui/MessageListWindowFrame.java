@@ -15,9 +15,9 @@ import com.znow.communication_system.server.domain.Message;
 import com.znow.communication_system.server.domain.MessageCategory;
 
 @SuppressWarnings("serial")
-public class MessageListWindowFrame extends JFrame {
+class MessageListWindowFrame extends JFrame {
 	
-	public MessageListWindowFrame(ClientWindow window, Client client, MessageCategory category) {
+	MessageListWindowFrame(ClientWindow window, Client client, MessageCategory category) {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
