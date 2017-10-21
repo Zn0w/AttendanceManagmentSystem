@@ -24,8 +24,8 @@ public class MessageDao {
                 String[] lineAttributes = line.split(";");
             	
             	if (lineAttributes[1].equals(login) || lineAttributes[1].equals("public"))
-            		userMessages.add(new Message(lineAttributes[2], lineAttributes[3], 
-            				lineAttributes[4], lineAttributes[5], lineAttributes[6]
+            		userMessages.add(new Message(lineAttributes[3], lineAttributes[4], 
+            				lineAttributes[5], lineAttributes[6], lineAttributes[7], lineAttributes[2]
             				));
             }
             
@@ -51,8 +51,8 @@ public class MessageDao {
                 String[] lineAttributes = line.split(";");
             	
             	if (lineAttributes[0].equals(login))
-            		userMessages.add(new Message(lineAttributes[2], lineAttributes[3], 
-            				lineAttributes[4], lineAttributes[5], lineAttributes[6]
+            		userMessages.add(new Message(lineAttributes[3], lineAttributes[4], 
+            				lineAttributes[5], lineAttributes[6], lineAttributes[7], lineAttributes[2]
             				));
             }
             
