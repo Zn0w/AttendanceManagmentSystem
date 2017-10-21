@@ -50,6 +50,10 @@ public class Client implements Runnable {
 		
 		this.window = window;
 	}
+	
+	public void disconnect() {
+		
+	}
 
 	@Override
 	public void run() {

@@ -40,9 +40,19 @@ class MainWindowFrame extends JPanel {
 		writeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				new LetterTypingWindow(client);
 			}
 		});
+		add(writeButton);
+		
+		JButton disconnectButton = new JButton("Disconnect");
+		disconnectButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				client.disconnect();
+			}
+		});
+		add(disconnectButton);
 	}
 	
 }
