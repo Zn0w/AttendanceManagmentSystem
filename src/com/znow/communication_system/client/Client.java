@@ -52,7 +52,7 @@ public class Client implements Runnable {
 	}
 	
 	public void disconnect() {
-		
+		System.out.println("disconnect from server (unimplemented)");
 	}
 
 	@Override
