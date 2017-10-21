@@ -35,6 +35,14 @@ class MainWindowFrame extends JPanel {
 		buttonPane.add(showOutgoingButton);
 		
 		add(buttonPane);
+		
+		JButton writeButton = new JButton("Write letter");
+		writeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 	}
 	
 }

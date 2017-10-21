@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.znow.communication_system.client.Client;
-import com.znow.communication_system.client.controllers.ConnectWindowController;
 
 @SuppressWarnings("serial")
 class ConnectWindowFrame extends JPanel {
@@ -39,9 +38,10 @@ class ConnectWindowFrame extends JPanel {
 					return;
 				}
 				
-				new ConnectWindowController(window, client).onConnectButton(
-						ipTxt.getText(), Integer.valueOf(portTxt.getText())
-						);
+				if (client.connect(ipTxt.getText(), Integer.valueOf(portTxt.getText())))
+					window.drawLoginWindow();
+				else
+					window.notify("Couldn't connect to server.");
 			}
 		});
 		add(connectButton);

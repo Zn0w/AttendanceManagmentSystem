@@ -11,7 +11,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.znow.communication_system.client.Client;
-import com.znow.communication_system.client.controllers.LoginWindowController;
 
 @SuppressWarnings("serial")
 class LoginWindowFrame extends JPanel {
@@ -40,9 +39,7 @@ class LoginWindowFrame extends JPanel {
 					return;
 				}
 				
-				new LoginWindowController(window, client).onConnectButton(
-						loginTxt.getText(), passwordTxt.getText()
-						);
+				client.logIn(loginTxt.getText(), passwordTxt.getText(), window);
 			}
 		});
 		add(connectButton);
