@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.znow.communication_system.server.dao.exceptions.UserNotFoundException;
 import com.znow.communication_system.server.domain.User;
@@ -31,6 +33,31 @@ public class UserDao {
         }
 		
 		throw new UserNotFoundException();
+	}
+	
+	public List<User> getUsers() {
+		try {
+
+			List<User> users = new ArrayList<User>();
+			
+			File f = new File("src/com/znow/communication_system/server/resources/users.txt");
+
+            BufferedReader b = new BufferedReader(new FileReader(f));
+
+            String line = "";
+
+            while ((line = b.readLine()) != null) {
+                String[] lineAttributes = line.split(";");
+                users.add(new User(lineAttributes[0], lineAttributes[1], lineAttributes[2]));
+            }
+            
+            return users;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+		List<User> empty = new ArrayList<User>();
+		return empty;
 	}
 	
 }
