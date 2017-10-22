@@ -6,16 +6,17 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.List;
 
 import com.znow.communication_system.client.gui.ClientWindow;
-import com.znow.communication_system.server.dao.MessageDao;
+import com.znow.communication_system.server.dao.UserDao;
+import com.znow.communication_system.server.dao.exceptions.UserNotFoundException;
 import com.znow.communication_system.server.domain.Message;
+import com.znow.communication_system.server.domain.User;
 
 public class Client implements Runnable {
 	
 	private boolean connected = false;
-	private String login = "";
+	private User user = null;
 	
 	private BufferedReader reader;
 	private PrintWriter writer;
@@ -44,6 +45,10 @@ public class Client implements Runnable {
 		return false;
 	}
 	
+	public void disconnect() {
+		System.out.println("disconnect from server (unimplemented)");
+	}
+	
 	public void logIn(String login, String password, ClientWindow window) {
 		writer.println("LOGIN;" + login + ";" + password);
 		writer.flush();
@@ -51,8 +56,13 @@ public class Client implements Runnable {
 		this.window = window;
 	}
 	
-	public void disconnect() {
-		System.out.println("disconnect from server (unimplemented)");
+	public void sendNewMessage(Message message) {
+		System.out.println(message.getDate());
+		System.out.println(message.getFrom());
+		System.out.println(message.getTo());
+		System.out.println(message.getSubject());
+		System.out.println(message.getContent());
+		System.out.println(message.isRead());
 	}
 
 	@Override
@@ -66,7 +76,11 @@ public class Client implements Runnable {
 					String[] messageAttributes = message.split(";");
 					
 					if (messageAttributes[0].equals("VERIFIED")) {
-						login = messageAttributes[1];
+						try {
+							user = new UserDao().getUser(messageAttributes[1]);
+						} catch (UserNotFoundException e) {
+							e.printStackTrace();
+						}
 						
 						window.drawMainWindow();
 					}
@@ -80,8 +94,8 @@ public class Client implements Runnable {
 		}
 	}
 	
-	public String getLogin() {
-		return login;
+	public User getUser() {
+		return user;
 	}
 	
 }

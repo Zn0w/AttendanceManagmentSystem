@@ -27,11 +27,11 @@ class MessageListWindowFrame extends JFrame {
 		
 		List<Message> messages = null;
 		if (category == MessageCategory.INCOMING) {
-			messages = new MessageDao().getIncomingMessages(client.getLogin());
+			messages = new MessageDao().getIncomingMessages(client.getUser().getLogin());
 			setTitle("Incoming messages");
 		}
 		else if (category == MessageCategory.OUTGOING) {
-			messages = new MessageDao().getOutgoingMessages(client.getLogin());
+			messages = new MessageDao().getOutgoingMessages(client.getUser().getLogin());
 			setTitle("Outgoing messages");
 		}
 		

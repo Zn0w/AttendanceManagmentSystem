@@ -12,6 +12,29 @@ import com.znow.communication_system.server.domain.User;
 
 public class UserDao {
 	
+	public User getUser(String login) throws UserNotFoundException {
+		try {
+
+            File f = new File("src/com/znow/communication_system/server/resources/users.txt");
+
+            BufferedReader b = new BufferedReader(new FileReader(f));
+
+            String line = "";
+
+            while ((line = b.readLine()) != null) {
+                String[] lineAttributes = line.split(";");
+            	
+            	if (lineAttributes[0].equals(login))
+            		return new User(lineAttributes[0], lineAttributes[1], lineAttributes[2]);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+		throw new UserNotFoundException();
+	}
+	
 	public User getUser(String login, String password) throws UserNotFoundException {
 		try {
 

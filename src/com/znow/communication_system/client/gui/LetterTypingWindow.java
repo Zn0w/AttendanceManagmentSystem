@@ -2,6 +2,9 @@ package com.znow.communication_system.client.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -15,6 +18,7 @@ import javax.swing.JTextField;
 
 import com.znow.communication_system.client.Client;
 import com.znow.communication_system.server.dao.UserDao;
+import com.znow.communication_system.server.domain.Message;
 import com.znow.communication_system.server.domain.User;
 
 @SuppressWarnings("serial")
@@ -38,17 +42,11 @@ class LetterTypingWindow extends JFrame {
 		String[] userOptions = new String[users.size() + 1];
 		userOptions[0] = "Everyone";
 		for (int i = 0; i < users.size(); i++) {
-			System.out.println(users.get(i).getLogin());
 			userOptions[i + 1] = users.get(i).getName();
 		}
 		
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		JComboBox toSelector = new JComboBox(userOptions);
-		toSelector.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String to = (String) toSelector.getSelectedItem();
-			}
-		});
 		root.add(toSelector);
 		
 		JLabel subjectLabel = new JLabel("Subject:");
@@ -64,6 +62,22 @@ class LetterTypingWindow extends JFrame {
 		root.add(contentTxt);
 		
 		JButton sendButton = new JButton("Send");
+		sendButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyy HH:mm:ss ZZZZ");
+				Date date = new Date();
+				
+				client.sendNewMessage(new Message(
+						dateFormatter.format(date), 
+						client.getUser().getName(), 
+						(String) toSelector.getSelectedItem(), 
+						subjectTxt.getText(), 
+						contentTxt.getText(), 
+						"read"
+						));
+			}
+		});
 		root.add(sendButton);
 		
 		setContentPane(root);
