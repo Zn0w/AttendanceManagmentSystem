@@ -73,7 +73,7 @@ public class Client implements Runnable {
 	}
 	
 	public List<Message> getUserMessages(MessageCategory category) {
-		writer.println("");
+		writer.println("GET_MESSAGES_IN;");
 		writer.flush();
 		
 		while(true) {
@@ -85,7 +85,7 @@ public class Client implements Runnable {
 	}
 	
 	public List<User> getAllUsers() {
-		writer.println("");
+		writer.println("GET_USERS;");
 		writer.flush();
 		
 		while(true) {
@@ -107,11 +107,9 @@ public class Client implements Runnable {
 					String[] messageAttributes = message.split(";");
 					
 					if (messageAttributes[0].equals("VERIFIED")) {
-						try {
-							user = new UserDao().getUser(messageAttributes[1]);
-						} catch (UserNotFoundException e) {
-							e.printStackTrace();
-						}
+						user = new User(
+								messageAttributes[1], messageAttributes[2], messageAttributes[3]
+										);
 						
 						window.drawMainWindow();
 					}

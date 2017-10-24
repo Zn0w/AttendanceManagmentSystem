@@ -65,7 +65,9 @@ public class Server {
 			try {
 				clientHandler.user = new UserDao().getUser(messageAttributes[1], messageAttributes[2]);
 				
-				clientHandler.writer.println("VERIFIED;" + messageAttributes[1]);
+				clientHandler.writer.println("VERIFIED;" + clientHandler.user.getLogin() + ";"
+					+ clientHandler.user.getPassword() + ";" + clientHandler.user.getName()
+				);
 				clientHandler.writer.flush();
 			} catch (UserNotFoundException e) {
 				e.printStackTrace();
