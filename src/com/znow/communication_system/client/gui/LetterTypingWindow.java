@@ -38,7 +38,7 @@ class LetterTypingWindow extends JFrame {
 		JLabel toLabel = new JLabel("To:");
 		root.add(toLabel);
 		
-		List<User> users = new UserDao().getUsers();
+		List<User> users = client.getAllUsers();
 		String[] userOptions = new String[users.size() + 1];
 		userOptions[0] = "Everyone";
 		for (int i = 0; i < users.size(); i++) {

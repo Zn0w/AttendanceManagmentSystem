@@ -25,15 +25,11 @@ class MessageListWindowFrame extends JFrame {
 		JPanel messagesPane = new JPanel();
 		messagesPane.setLayout(new BoxLayout(messagesPane, BoxLayout.Y_AXIS));
 		
-		List<Message> messages = null;
-		if (category == MessageCategory.INCOMING) {
-			messages = new MessageDao().getIncomingMessages(client.getUser().getLogin());
+		List<Message> messages = client.getUserMessages(category);
+		if (category == MessageCategory.INCOMING)
 			setTitle("Incoming messages");
-		}
-		else if (category == MessageCategory.OUTGOING) {
-			messages = new MessageDao().getOutgoingMessages(client.getUser().getLogin());
+		else if (category == MessageCategory.OUTGOING)
 			setTitle("Outgoing messages");
-		}
 		
 		for (Message message : messages) {
 			JButton messageButton = new JButton(message.getDate() + " " 

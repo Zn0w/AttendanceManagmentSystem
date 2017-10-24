@@ -6,17 +6,25 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.List;
 
 import com.znow.communication_system.client.gui.ClientWindow;
 import com.znow.communication_system.server.dao.UserDao;
 import com.znow.communication_system.server.dao.exceptions.UserNotFoundException;
 import com.znow.communication_system.server.domain.Message;
+import com.znow.communication_system.server.domain.MessageCategory;
 import com.znow.communication_system.server.domain.User;
 
 public class Client implements Runnable {
 	
 	private boolean connected = false;
 	private User user = null;
+	
+	private List<User> tempUsers;
+	private boolean tempGotUsers = false;
+	
+	private List<Message> tempMessages;
+	private boolean tempGotMessages = false;
 	
 	private BufferedReader reader;
 	private PrintWriter writer;
@@ -57,12 +65,35 @@ public class Client implements Runnable {
 	}
 	
 	public void sendNewMessage(Message message) {
-		System.out.println(message.getDate());
-		System.out.println(message.getFrom());
-		System.out.println(message.getTo());
-		System.out.println(message.getSubject());
-		System.out.println(message.getContent());
-		System.out.println(message.isRead());
+		Class m = message.getClass();
+		System.out.println(m.toString());
+		
+		writer.println(message);
+		writer.flush();
+	}
+	
+	public List<Message> getUserMessages(MessageCategory category) {
+		writer.println("");
+		writer.flush();
+		
+		while(true) {
+			if (tempGotMessages) {
+				tempGotMessages = false;
+				return tempMessages;
+			}
+		}
+	}
+	
+	public List<User> getAllUsers() {
+		writer.println("");
+		writer.flush();
+		
+		while(true) {
+			if (tempGotUsers) {
+				tempGotUsers = false;
+				return tempUsers;
+			}
+		}
 	}
 
 	@Override
