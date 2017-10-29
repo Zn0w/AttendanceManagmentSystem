@@ -73,7 +73,10 @@ public class Client implements Runnable {
 	}
 	
 	public List<Message> getUserMessages(MessageCategory category) {
-		writer.println("GET_MESSAGES_IN;");
+		if (category == MessageCategory.INCOMING)
+			writer.println("GET_MESSAGES_IN;" + user.getLogin());
+		else if (category == MessageCategory.OUTGOING)
+			writer.print("GET_MESSAGES_OUT;" + user.getLogin());
 		writer.flush();
 		
 		while(true) {
@@ -115,6 +118,9 @@ public class Client implements Runnable {
 					}
 					else if (messageAttributes[0].equals("NOT VERIFIED")) {
 						window.notify("Couldn't log in.");
+					}
+					else if (messageAttributes[0].equals("LOAD_MESSAGE")) {
+						tempGotUsers = true;
 					}
 				}
 			}

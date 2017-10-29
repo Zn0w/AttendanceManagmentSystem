@@ -9,8 +9,10 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.znow.communication_system.server.dao.MessageDao;
 import com.znow.communication_system.server.dao.UserDao;
 import com.znow.communication_system.server.dao.exceptions.UserNotFoundException;
+import com.znow.communication_system.server.domain.Message;
 import com.znow.communication_system.server.domain.User;
 
 public class Server {
@@ -73,6 +75,22 @@ public class Server {
 				e.printStackTrace();
 				
 				clientHandler.writer.println("NOT VERIFIED;");
+				clientHandler.writer.flush();
+			}
+		}
+		else if (messageAttributes[0].equals("GET_MESSAGES_IN")) {
+			List<Message> messages = new MessageDao().getIncomingMessages(messageAttributes[1]);
+			
+			for (Message m : messages) {
+				clientHandler.writer.println(
+						"LOAD_MESSAGE;" + 
+						m.getDate() + ";" +
+						m.getFrom() + ";" +
+						m.getTo() + ";" +
+						m.getSubject() + ";" +
+						m.getContent() + ";" +
+						m.isRead() + ";"
+				);
 				clientHandler.writer.flush();
 			}
 		}
