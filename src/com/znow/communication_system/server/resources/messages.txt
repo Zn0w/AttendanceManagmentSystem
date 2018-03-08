@@ -1,3 +1,0 @@
-fromLogin;toLogin;read/unread;date;from;to;subject;content
-jack;daniel;read;13.10.2017;Rober Heatbouss;Daniil Blagiy;Deal results;The deal was successful
-daniel;test;read;test date;Daniil Blagiy;Test to;test subject;test content
