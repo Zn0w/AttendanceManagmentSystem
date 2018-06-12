@@ -10,14 +10,13 @@ public class ClientMain {
 	{
 		System.out.println("Client side\n");
 
-		if (args.length == 3)
-		{
-			client = new Client(args[0], Integer.parseInt(args[1]), Integer.parseInt(args[2]));
-		}
-		else
+		if (args.length != 3)
 		{
 			System.out.println("Use this framework: java -jar client.jar [ip] [port] [client id]");
+			return;
 		}
+
+		client = new Client(args[0], Integer.parseInt(args[1]), Integer.parseInt(args[2]));
 	}
 	
 }
