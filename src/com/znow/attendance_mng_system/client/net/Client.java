@@ -4,37 +4,79 @@ import java.net.Socket;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.io.InputStreamReader;
+import java.io.IOException;
 
 public class Client {
 
-	String ip;
-	int port;
+	//String ip;
+	//int port;
 	int id;
 
 	BufferedReader reader;
 	PrintWriter writer;
 
+	boolean connected;
+
 	public Client(String ip, int port, int id)
 	{
-		this.ip = ip;
-		this.port = port;
+		//this.ip = ip;
+		//this.port = port;
 		this.id = id;
 
-		System.out.println("ip: " + this.ip);
-		System.out.println("port: " + this.port);
+		System.out.println("ip: " + ip);
+		System.out.println("port: " + port);
 		System.out.println("id: " + this.id);
 
-		/*if (connectToServer())
+		connected = connectToServer(ip, port);
+
+		if (!connected)
 		{
 			System.out.println("Failed to connect to the server (" + ip + ", " + port + ")");
 			System.out.println("1. Check if you entered the client's id correctly.");
 			System.out.println("2. Check if the server you are trying to connect to is running at the moment.");
-		}*/
+
+			return;
+		}
+
+		// Test
+		writer.println("Hello from a client!");
+		writer.flush();
+
+		while (connected)
+		{
+			try
+			{
+				String in_message = reader.readLine();
+				if (in_message != null)
+				{
+					System.out.println("Client: " + in_message);
+				}
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 
-	boolean connectToServer()
+	boolean connectToServer(String ip, int port)
 	{
-		return true;
+		try
+		{
+			Socket cSocket = new Socket(ip, port);
+
+			reader = new BufferedReader(new InputStreamReader(cSocket.getInputStream()));
+			writer = new PrintWriter(cSocket.getOutputStream());
+
+			return true;
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+
+			return false;
+		}
 	}
 
 };
