@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.io.InputStreamReader;
 import java.io.IOException;
 
+import com.znow.attendance_mng_system.comm_interface.*;
+
 class ClientHandler implements Runnable {
 
 	Socket cSocket;
@@ -47,6 +49,7 @@ class ClientHandler implements Runnable {
 				if (in_message != null)
 				{
 					System.out.println("Client: " + in_message);
+					serverAnalyse(in_message, writer);
 				}
 			}
 			catch (IOException e)

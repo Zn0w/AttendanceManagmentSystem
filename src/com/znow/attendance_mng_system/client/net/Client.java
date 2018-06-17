@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.io.InputStreamReader;
 import java.io.IOException;
 
+import com.znow.attendance_mng_system.comm_interface.*;
+
 public class Client {
 
 	//String ip;
@@ -39,8 +41,8 @@ public class Client {
 			return;
 		}
 
-		// Test
-		writer.println("Hello from a client!");
+		// check in
+		writer.println("register " + id);
 		writer.flush();
 
 		while (connected)
@@ -51,6 +53,7 @@ public class Client {
 				if (in_message != null)
 				{
 					System.out.println("Client: " + in_message);
+					clientAnalyse(in_message, writer);
 				}
 			}
 			catch (IOException e)
