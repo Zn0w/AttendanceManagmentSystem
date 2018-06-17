@@ -41,9 +41,7 @@ public class Client {
 			return;
 		}
 
-		// check in
-		writer.println("register " + id);
-		writer.flush();
+		CommunicationInterface.clientMessage(writer, Message.REGISTER, Integer.toString(id));
 
 		while (connected)
 		{
@@ -53,7 +51,7 @@ public class Client {
 				if (in_message != null)
 				{
 					System.out.println("Client: " + in_message);
-					clientAnalyse(in_message, writer);
+					CommunicationInterface.clientAnalyse(in_message, writer);
 				}
 			}
 			catch (IOException e)

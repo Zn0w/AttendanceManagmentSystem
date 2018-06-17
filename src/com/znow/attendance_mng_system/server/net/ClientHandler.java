@@ -49,7 +49,7 @@ class ClientHandler implements Runnable {
 				if (in_message != null)
 				{
 					System.out.println("Client: " + in_message);
-					serverAnalyse(in_message, writer);
+					CommunicationInterface.serverAnalyse(in_message, writer);
 				}
 			}
 			catch (IOException e)

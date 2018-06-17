@@ -1,3 +1,5 @@
+package com.znow.attendance_mng_system.comm_interface;
+
 public enum Message {
 
 	// Client messages
