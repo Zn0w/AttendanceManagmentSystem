@@ -2,6 +2,11 @@ package com.znow.attendance_mng_system.comm_interface;
 
 import java.io.PrintWriter;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class CommunicationInterface {
 
 	public static void clientMessage(PrintWriter writer, Message messageType, String info)
@@ -46,16 +51,36 @@ public class CommunicationInterface {
 		String[] elements = message.split(" ");
 		if (elements[0].equals("register"))
 		{
-			if (verifyClient(Integer.parseInt(elements[1])))
+			if (verifyClient(elements[1]))
 				serverMessage(writer, Message.REGISTER_SUCCESS);
 			else
 				serverMessage(writer, Message.REGISTER_FAIL);
 		}
 	}
 
-	private static boolean verifyClient(int id)
+	private static boolean verifyClient(String id)
 	{
-		return true;
+		try
+		{
+            // Now absolute filepath is used, will be changed when release version comes out
+			File file = new File("D://dev/AttendanceManagmentSystem/resources/clients.txt");
+
+            BufferedReader fileReader = new BufferedReader(new FileReader(file));
+
+            String line = "";
+            while ((line = fileReader.readLine()) != null)
+			{
+                if (id.equals(line))
+					return true;
+            }
+
+			return false;
+        }
+		catch (IOException e)
+		{
+            e.printStackTrace();
+			return false;
+        }
 	}
 
 };

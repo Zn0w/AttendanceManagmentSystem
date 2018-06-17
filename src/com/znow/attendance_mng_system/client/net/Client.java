@@ -50,7 +50,7 @@ public class Client {
 				String in_message = reader.readLine();
 				if (in_message != null)
 				{
-					System.out.println("Client: " + in_message);
+					System.out.println("Server: " + in_message);
 					CommunicationInterface.clientAnalyse(in_message, writer);
 				}
 			}
