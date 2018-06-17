@@ -43,7 +43,19 @@ public class CommunicationInterface {
 
 	public static void serverAnalyse(String message, PrintWriter writer)
 	{
+		String[] elements = message.split(" ");
+		if (elements[0].equals("register"))
+		{
+			if (verifyClient(Integer.parseInt(elements[1])))
+				serverMessage(writer, Message.REGISTER_SUCCESS);
+			else
+				serverMessage(writer, Message.REGISTER_FAIL);
+		}
+	}
 
+	private static boolean verifyClient(int id)
+	{
+		return true;
 	}
 
 };
