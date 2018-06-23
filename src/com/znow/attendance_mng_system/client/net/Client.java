@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import com.znow.attendance_mng_system.comm_interface.*;
 
-public class Client {
+public class Client implements Runnable {
 
 	//String ip;
 	//int port;
@@ -41,24 +41,8 @@ public class Client {
 			return;
 		}
 
-		CommunicationInterface.clientMessage(writer, Message.REGISTER, id);
-
-		while (connected)
-		{
-			try
-			{
-				String in_message = reader.readLine();
-				if (in_message != null)
-				{
-					System.out.println("Server: " + in_message);
-					CommunicationInterface.clientAnalyse(in_message, writer);
-				}
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
+		Thread clientThread = new Thread(this);
+		clientThread.start();
 	}
 
 	boolean connectToServer(String ip, int port)
@@ -77,6 +61,28 @@ public class Client {
 			e.printStackTrace();
 
 			return false;
+		}
+	}
+
+	public void run()
+	{
+		CommunicationInterface.clientMessage(writer, Message.REGISTER, id);
+
+		while (connected)
+		{
+			try
+			{
+				String in_message = reader.readLine();
+				if (in_message != null)
+				{
+					System.out.println("Server: " + in_message);
+					CommunicationInterface.clientAnalyse(in_message, writer);
+				}
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 
