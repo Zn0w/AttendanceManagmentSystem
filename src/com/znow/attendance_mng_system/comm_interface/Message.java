@@ -5,6 +5,7 @@ public enum Message {
 	// Client messages
 	REGISTER,
 	SAVE,
+	DISCONNECT,
 	
 	// Server messages
 	REGISTER_SUCCESS,

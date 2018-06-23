@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import com.znow.attendance_mng_system.server.net.ClientHandler;
+import com.znow.attendance_mng_system.client.net.Client;
+
 public class CommunicationInterface {
 
 	public static void clientMessage(PrintWriter writer, Message messageType, String info)
@@ -16,6 +19,8 @@ public class CommunicationInterface {
 			command = "register";
 		else if (messageType == Message.SAVE)
 			command = "save";
+		else if (messageType == Message.DISCONNECT)
+			command = "disconnect";
 		else
 			return;
 
@@ -41,20 +46,34 @@ public class CommunicationInterface {
 		writer.flush();
 	}
 
-	public static void clientAnalyse(String message, PrintWriter writer)
-	{
-
-	}
-
-	public static void serverAnalyse(String message, PrintWriter writer)
+	public static void clientAnalyse(String message, PrintWriter writer, Client client)
 	{
 		String[] elements = message.split(" ");
+		if (elements[0].equals("register"))
+		{
+			if (elements[1].equals("fail"))
+			{
+				clientMessage(writer, Message.DISCONNECT, "");
+				client.connected = false;
+			}
+		}
+	}
+
+	public static void serverAnalyse(String message, PrintWriter writer, ClientHandler clientHandler)
+	{
+		String[] elements = message.split(" ");
+		
 		if (elements[0].equals("register"))
 		{
 			if (verifyClient(elements[1]))
 				serverMessage(writer, Message.REGISTER_SUCCESS);
 			else
 				serverMessage(writer, Message.REGISTER_FAIL);
+		}
+
+		else if (elements[0].equals("disconnect"))
+		{
+			clientHandler.disconnectClient();
 		}
 	}
 

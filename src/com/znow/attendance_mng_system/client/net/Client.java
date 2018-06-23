@@ -18,7 +18,7 @@ public class Client implements Runnable {
 	BufferedReader reader;
 	PrintWriter writer;
 
-	boolean connected;
+	public boolean connected;
 
 	public Client(String ip, int port, String id)
 	{
@@ -76,7 +76,7 @@ public class Client implements Runnable {
 				if (in_message != null)
 				{
 					System.out.println("Server: " + in_message);
-					CommunicationInterface.clientAnalyse(in_message, writer);
+					CommunicationInterface.clientAnalyse(in_message, writer, this);
 				}
 			}
 			catch (IOException e)

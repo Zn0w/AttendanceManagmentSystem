@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import com.znow.attendance_mng_system.comm_interface.*;
 
-class ClientHandler implements Runnable {
+public class ClientHandler implements Runnable {
 
 	Socket cSocket;
 	
@@ -49,7 +49,7 @@ class ClientHandler implements Runnable {
 				if (in_message != null)
 				{
 					System.out.println("Client: " + in_message);
-					CommunicationInterface.serverAnalyse(in_message, writer);
+					CommunicationInterface.serverAnalyse(in_message, writer, this);
 				}
 			}
 			catch (IOException e)
@@ -57,6 +57,24 @@ class ClientHandler implements Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void disconnectClient()
+	{
+		connected = false;
+		
+		try
+		{
+			reader.close();
+			writer.close();
+			cSocket.close();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
+		server.clients.remove(this);
 	}
 
 };
