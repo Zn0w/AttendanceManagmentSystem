@@ -16,7 +16,7 @@ public class ClientMain {
 			return;
 		}
 
-		client = new Client(args[0], Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+		client = new Client(args[0], Integer.parseInt(args[1]), args[2]);
 	}
 	
 }

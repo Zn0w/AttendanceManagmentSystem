@@ -13,14 +13,14 @@ public class Client {
 
 	//String ip;
 	//int port;
-	int id;
+	String id;
 
 	BufferedReader reader;
 	PrintWriter writer;
 
 	boolean connected;
 
-	public Client(String ip, int port, int id)
+	public Client(String ip, int port, String id)
 	{
 		//this.ip = ip;
 		//this.port = port;
@@ -41,7 +41,7 @@ public class Client {
 			return;
 		}
 
-		CommunicationInterface.clientMessage(writer, Message.REGISTER, Integer.toString(id));
+		CommunicationInterface.clientMessage(writer, Message.REGISTER, id);
 
 		while (connected)
 		{
