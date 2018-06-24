@@ -51,10 +51,13 @@ public class CommunicationInterface {
 		String[] elements = message.split(" ");
 		if (elements[0].equals("register"))
 		{
-			if (elements[1].equals("fail"))
+			if (elements[1].equals("success"))
 			{
-				clientMessage(writer, Message.DISCONNECT, "");
-				client.connected = false;
+				client.window.startWindow();
+			}
+			else if (elements[1].equals("fail"))
+			{
+				client.disconnect();
 			}
 		}
 	}

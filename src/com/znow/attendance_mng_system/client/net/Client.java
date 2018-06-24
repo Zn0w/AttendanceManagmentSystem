@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 
 import com.znow.attendance_mng_system.comm_interface.*;
+import com.znow.attendance_mng_system.client.gui.Window;
 
 public class Client implements Runnable {
 
@@ -19,6 +20,8 @@ public class Client implements Runnable {
 	PrintWriter writer;
 
 	public boolean connected;
+
+	public Window window = new Window(this);
 
 	public Client(String ip, int port, String id)
 	{
@@ -84,6 +87,12 @@ public class Client implements Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void disconnect()
+	{
+		CommunicationInterface.clientMessage(writer, Message.DISCONNECT, "");
+		connected = false;
 	}
 
 };
