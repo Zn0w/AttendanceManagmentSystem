@@ -1,8 +1,7 @@
 package com.znow.attendance_mng_system.client.gui;
 
 import javax.swing.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 import com.znow.attendance_mng_system.client.net.Client;
 import com.znow.attendance_mng_system.comm_interface.*;
@@ -23,19 +22,32 @@ public class Window extends JFrame {
 		addWindowListener(new WindowAdapter() {
 	        @Override
 	        public void windowClosing(WindowEvent event) {
-	            // #####################################################
-				// TODO: Test this out
 				client.disconnect();
 				dispose();
-				// #####################################################
 	        }
 	    });
 
 		JPanel root = new JPanel();
 		setContentPane(root);
 		
-		JLabel lblInstructions = new JLabel("Fill out the text fields to check in.");
+		JLabel lblInstructions = new JLabel("Please enter your Employee ID");
 		root.add(lblInstructions);
+
+		JTextField txtId = new JTextField(50);
+		root.add(txtId);
+
+		JButton btnRegister = new JButton("Check in");
+		btnRegister.addActionListener(
+			new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					// Send save request to the server via client class
+				}
+			}
+		);
+		root.add(btnRegister);
 
 		pack();
 		setVisible(true);
