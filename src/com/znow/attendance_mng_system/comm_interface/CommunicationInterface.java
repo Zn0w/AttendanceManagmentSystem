@@ -21,6 +21,8 @@ public class CommunicationInterface {
 			command = "save";
 		else if (messageType == Message.DISCONNECT)
 			command = "disconnect";
+		else if (messageType == Message.SAVE)
+			command = "save"
 		else
 			return;
 
@@ -78,6 +80,14 @@ public class CommunicationInterface {
 		{
 			clientHandler.disconnectClient();
 		}
+
+		else if (elements[0].equals("save"))
+		{
+			if (saveClient(elements[1]))
+				serverMessage(writer, Message.SAVE_SUCCESS);
+			else
+				serverMessage(writer, Message.SAVE_FAIL);
+		}
 	}
 
 	private static boolean verifyClient(String id)
@@ -93,6 +103,57 @@ public class CommunicationInterface {
             while ((line = fileReader.readLine()) != null)
 			{
                 if (id.equals(line))
+					return true;
+            }
+
+			return false;
+        }
+		catch (IOException e)
+		{
+            e.printStackTrace();
+			return false;
+        }
+	}
+
+	private verifyClientId(String info)
+	{
+		try
+		{
+            // Now absolute filepath is used, will be changed when release version comes out
+			File employeesFile = new File("D://dev/AttendanceManagmentSystem/resources/employees.txt");
+
+            BufferedReader fileReader = new BufferedReader(new FileReader(employeesFile));
+
+            String line = "";
+            while ((line = fileReader.readLine()) != null)
+			{
+                if (info.equals(line))
+					return true;
+            }
+
+			return false;
+        }
+		catch (IOException e)
+		{
+            e.printStackTrace();
+			return false;
+        }
+	}
+
+	private static boolean saveClient(String info)
+	{	
+		try
+		{
+            // Now absolute filepath is used, will be changed when release version comes out
+			File savesFile = new File("D://dev/AttendanceManagmentSystem/resources/saves.txt");
+			File employeesFile = new File("D://dev/AttendanceManagmentSystem/resources/employees.txt");
+
+            BufferedReader fileReader = new BufferedReader(new FileReader(employeesFile));
+
+            String line = "";
+            while ((line = fileReader.readLine()) != null)
+			{
+                if (info.equals(line))
 					return true;
             }
 
