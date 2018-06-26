@@ -28,12 +28,13 @@ public class Window extends JFrame {
 	    });
 
 		JPanel root = new JPanel();
+		root.setLayout(new BoxLayout(root, BoxLayout.Y_AXIS));
 		setContentPane(root);
 		
 		JLabel lblInstructions = new JLabel("Please enter your Employee ID");
 		root.add(lblInstructions);
 
-		JTextField txtId = new JTextField(50);
+		JTextField txtId = new JTextField(10);
 		root.add(txtId);
 
 		JButton btnRegister = new JButton("Check in");
