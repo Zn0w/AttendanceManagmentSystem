@@ -144,19 +144,23 @@ public class CommunicationInterface {
 		if (name == null)
 			return false;
 		
+		FileWriter fw = null;
+		BufferedWriter bw = null;
 		try
 		{
             // Now absolute filepath is used, will be changed when release version comes out
 			File savesFile = new File("D://dev/AttendanceManagmentSystem/resources/saves.txt");
 
-            FileWriter fw = new FileWriter(savesFile, true);
-			BufferedWriter bw = new BufferedWriter(fw);
+            fw = new FileWriter(savesFile, true);
+			bw = new BufferedWriter(fw);
 
 			// Get current time
 			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
 			Date date = new Date();
 			
-			bw.write(id + " | " + name + " | " + dateFormat.format(date) + "\n");
+			bw.write(id + " | " + name + " | " + dateFormat.format(date));
+			bw.newLine();
+			bw.flush();
 
 			return true;
         }
@@ -165,6 +169,22 @@ public class CommunicationInterface {
             e.printStackTrace();
 			return false;
         }
+		finally {
+
+			try {
+
+				if (bw != null)
+					bw.close();
+
+				if (fw != null)
+					fw.close();
+
+			} catch (IOException e) {
+
+				e.printStackTrace();
+
+			}
+		}
 	}
 
 };

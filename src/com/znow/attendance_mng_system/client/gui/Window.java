@@ -4,11 +4,12 @@ import javax.swing.*;
 import java.awt.event.*;
 
 import com.znow.attendance_mng_system.client.net.Client;
-import com.znow.attendance_mng_system.comm_interface.*;
 
 public class Window extends JFrame {
 
 	Client client;
+
+	JPanel root;
 
 	public Window(Client client)
 	{
@@ -27,7 +28,7 @@ public class Window extends JFrame {
 	        }
 	    });
 
-		JPanel root = new JPanel();
+		root = new JPanel();
 		root.setLayout(new BoxLayout(root, BoxLayout.Y_AXIS));
 		setContentPane(root);
 		
@@ -44,7 +45,7 @@ public class Window extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					// Send save request to the server via client class
+					client.checkIn(txtId.getText());
 				}
 			}
 		);
@@ -52,6 +53,11 @@ public class Window extends JFrame {
 
 		pack();
 		setVisible(true);
+	}
+
+	public void notifyOnSave(boolean success)
+	{
+
 	}
 
 };

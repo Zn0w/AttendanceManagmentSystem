@@ -99,7 +99,7 @@ public class Client implements Runnable {
 	// Gui controller method
 	public void checkIn(String id)
 	{
-		CommunicationInterface.clientMessage(writer, Message.SAVE, "");
+		CommunicationInterface.clientMessage(writer, Message.SAVE, id);
 	}
 
 };
