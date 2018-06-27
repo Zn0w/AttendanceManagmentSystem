@@ -1,11 +1,8 @@
 package com.znow.attendance_mng_system.comm_interface;
 
-import java.io.PrintWriter;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.Date;
+import java.text.*;
 
 import com.znow.attendance_mng_system.server.net.ClientHandler;
 import com.znow.attendance_mng_system.client.net.Client;
@@ -22,7 +19,7 @@ public class CommunicationInterface {
 		else if (messageType == Message.DISCONNECT)
 			command = "disconnect";
 		else if (messageType == Message.SAVE)
-			command = "save"
+			command = "save";
 		else
 			return;
 
@@ -115,7 +112,7 @@ public class CommunicationInterface {
         }
 	}
 
-	private verifyClientId(String info)
+	private static String verifyClientId(String id)
 	{
 		try
 		{
@@ -127,37 +124,41 @@ public class CommunicationInterface {
             String line = "";
             while ((line = fileReader.readLine()) != null)
 			{
-                if (info.equals(line))
-					return true;
+                String[] elements = line.split(";");
+				if (elements.length > 1 && id.equals(elements[0]))
+					return elements[1];
             }
 
-			return false;
+			return null;
         }
 		catch (IOException e)
 		{
             e.printStackTrace();
-			return false;
+			return null;
         }
 	}
 
-	private static boolean saveClient(String info)
+	private static boolean saveClient(String id)
 	{	
+		String name = verifyClientId(id);
+		if (name == null)
+			return false;
+		
 		try
 		{
             // Now absolute filepath is used, will be changed when release version comes out
 			File savesFile = new File("D://dev/AttendanceManagmentSystem/resources/saves.txt");
-			File employeesFile = new File("D://dev/AttendanceManagmentSystem/resources/employees.txt");
 
-            BufferedReader fileReader = new BufferedReader(new FileReader(employeesFile));
+            FileWriter fw = new FileWriter(savesFile, true);
+			BufferedWriter bw = new BufferedWriter(fw);
 
-            String line = "";
-            while ((line = fileReader.readLine()) != null)
-			{
-                if (info.equals(line))
-					return true;
-            }
+			// Get current time
+			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+			Date date = new Date();
+			
+			bw.write(id + " | " + name + " | " + dateFormat.format(date) + "\n");
 
-			return false;
+			return true;
         }
 		catch (IOException e)
 		{

@@ -89,10 +89,17 @@ public class Client implements Runnable {
 		}
 	}
 
+	// Gui controller method
 	public void disconnect()
 	{
 		CommunicationInterface.clientMessage(writer, Message.DISCONNECT, "");
 		connected = false;
+	}
+
+	// Gui controller method
+	public void checkIn(String id)
+	{
+		CommunicationInterface.clientMessage(writer, Message.SAVE, "");
 	}
 
 };
