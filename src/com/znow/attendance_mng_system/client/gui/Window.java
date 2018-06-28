@@ -46,6 +46,7 @@ public class Window extends JFrame {
 				public void actionPerformed(ActionEvent e)
 				{
 					client.checkIn(txtId.getText());
+					txtId.setText("");
 				}
 			}
 		);
