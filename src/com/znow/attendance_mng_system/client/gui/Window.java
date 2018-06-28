@@ -58,7 +58,10 @@ public class Window extends JFrame {
 
 	public void notifyOnSave(boolean success)
 	{
-
+		if (success)
+			JOptionPane.showMessageDialog(root, "You have been checked in successfully.");
+		else
+			JOptionPane.showMessageDialog(root, "Could not check you in, please try again.");
 	}
 
 };

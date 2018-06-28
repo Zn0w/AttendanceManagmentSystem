@@ -48,6 +48,7 @@ public class CommunicationInterface {
 	public static void clientAnalyse(String message, PrintWriter writer, Client client)
 	{
 		String[] elements = message.split(" ");
+
 		if (elements[0].equals("register"))
 		{
 			if (elements[1].equals("success"))
@@ -58,6 +59,11 @@ public class CommunicationInterface {
 			{
 				client.disconnect();
 			}
+		}
+
+		else if (elements[0].equals("save"))
+		{
+			client.window.notifyOnSave(elements[1].equals("success"));
 		}
 	}
 
